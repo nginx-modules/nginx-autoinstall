@@ -18,7 +18,7 @@ LIBRESSL_VER=2.5.5
 OPENSSL_VER=1.1.0f
 NPS_VER=1.12.34.2
 HEADERMOD_VER=0.32
-VTS=0.1.15
+VTS_VER=0.1.15
 
 # Clear log files
 echo "" > /tmp/nginx-autoinstall-output.log
@@ -61,7 +61,7 @@ case $OPTION in
 			read -p "       Cloudflare's TLS Dynamic Record Resizing patch [y/n]: " -e TCP
 		done
 		while [[ $VTS != "y" && $VTS != "n" ]]; do
-			read -p "       VTS (Nginx virtual host traffic status module)  [y/n]: " -e VTS
+			read -p "       VTS $VTS_VER (Nginx virtual host traffic status module)  [y/n]: " -e VTS
 		done
 		echo ""
 		echo "Choose your OpenSSL implementation :"
@@ -136,17 +136,17 @@ case $OPTION in
 		if [[ "$VTSNGX" = 'y' ]]; then
 			cd /usr/local/src
 			# Cleaning up in case of update
-			rm -r ${VTS} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
-			echo -ne "       Downloading nginx-module-vts   [..]\r"
-			wget https://github.com/vozlt/nginx-module-vts/releases/${VTS}.tar.gz 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			tar xaf ${VTS}.tar.gz
-			rm ${VTS}.tar.gz
+			rm -r ${VTS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
+			echo -ne "       Downloading VTS   [..]\r"
+			wget https://github.com/vozlt/nginx-module-vts/archive/${VTS}.tar.gz 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			tar xaf ${VTS_VER}.tar.gz
+			rm ${VTS_VER}.tar.gz
 				
 			if [ $? -eq 0 ]; then
-				echo -ne "       Downloading nginx-module-vts   [${CGREEN}OK${CEND}]\r"
+				echo -ne "       Downloading VTS   [${CGREEN}OK${CEND}]\r"
 				echo -ne "\n"
 			else
-				echo -e "       Downloading nginx-module-vts   [${CRED}FAIL${CEND}]"
+				echo -e "       Downloading VTS   [${CRED}FAIL${CEND}]"
 				echo ""
 				echo "Please look /tmp/nginx-autoinstall-error.log"
 				echo ""
