@@ -18,7 +18,9 @@ LIBRESSL_VER=2.5.5
 OPENSSL_VER=1.1.0f
 NPS_VER=1.12.34.2
 HEADERMOD_VER=0.32
-VTS=0
+VTS=0.1.15
+
+#https://github.com/pagespeed/ngx_pagespeed/archive/v1.12.34.2-stable.tar.gz
 
 # Clear log files
 echo "" > /tmp/nginx-autoinstall-output.log
@@ -59,6 +61,9 @@ case $OPTION in
 		done
 		while [[ $TCP != "y" && $TCP != "n" ]]; do
 			read -p "       Cloudflare's TLS Dynamic Record Resizing patch [y/n]: " -e TCP
+		done
+		while [[ $VTS != "y" && $VTS != "n" ]]; do
+			read -p "       VTS (Nginx virtual host traffic status module)  [y/n]: " -e VTS
 		done
 		echo ""
 		echo "Choose your OpenSSL implementation :"
