@@ -510,8 +510,8 @@ case $OPTION in
 		if [[ "$FIX" = 'y' ]]; then
 			echo -ne "       PageSpeed  FixPatch    [..]\r"
 			cd /usr/local/src/ngx_pagespeed-${NPS_VER}-stable
-			wget https://patch-diff.githubusercontent.com/raw/pagespeed/ngx_pagespeed/pull/1453.diff 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			patch -p1 < 1453.diff 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/1488.diff 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			patch -p1 < 1488.diff 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		        
 			if [ $? -eq 0 ]; then
 				echo -ne "       PageSpeed  FixPatch       [${CGREEN}OK${CEND}]\r"
