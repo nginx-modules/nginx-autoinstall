@@ -271,14 +271,15 @@ case $OPTION in
 		fi
 		
 	                # VTS (Nginx virtual host traffic status module) 
-		if [[ "$VTSNGX" = 'y' ]]; then
+		     if [[ "$VTSNGX" = 'y' ]]; then
 			cd /usr/local/src
 			# Cleaning up in case of update
 			rm -r ${VTS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
 			echo -ne "       Downloading VTS   [..]\r"
-			wget https://github.com/vozlt/nginx-module-vts/archive/${VTS_VER}.tar.gz 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			tar xaf ${VTS_VER}.tar.gz
-			rm ${VTS_VER}.tar.gz
+			git clone https://github.com/vozlt/nginx-module-vts.git  2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			#wget https://github.com/vozlt/nginx-module-vts/archive/${VTS_VER}.tar.gz 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			#tar xaf ${VTS_VER}.tar.gz
+			#rm ${VTS_VER}.tar.gz
 				
 			if [ $? -eq 0 ]; then
 				echo -ne "       Downloading VTS   [${CGREEN}OK${CEND}]\r"
@@ -461,8 +462,8 @@ case $OPTION in
 			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/ngx_pagespeed-${NPS_VER}-beta")
 		fi
 		# VTS
-		if [[ "$VTS" = 'y' ]]; then
-			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/$VTS")
+		if [[ "$VTSNGX" = 'y' ]]; then
+			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/$VTSNGX")
 		fi
 		# Brotli
 		if [[ "$BROTLI" = 'y' ]]; then
