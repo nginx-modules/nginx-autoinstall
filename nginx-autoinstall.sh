@@ -391,17 +391,17 @@ case $OPTION in
 				
 		# PageSpeed  Patch 
 		if [[ "$FIX" = 'y' ]]; then
-			echo -ne "       PageSpeed  FixPatch    [..]\r"
+			echo -ne "       PageSpeed  FixPatch       [..]\r"
 			cd /usr/local/src/ngx_pagespeed-${NPS_VER}-stable
 			wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/1488.diff 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			#patch -p1 < 1488.diff 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			patch src/ngx_pagespeed.cc -i 1488.diff -o updated.ngx_pagespeed.cc 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			cp updated.ngx_pagespeed.cc src/ngx_pagespeed.cc
 			if [ $? -eq 0 ]; then
-				echo -ne "       PageSpeed  FixPatch       [${CGREEN}OK${CEND}]\r"
+				echo -ne "       PageSpeed  FixPatch          [${CGREEN}OK${CEND}]\r"
 				echo -ne "\n"
 			else
-				echo -e "       PageSpeed  FixPatch       [${CRED}FAIL${CEND}]"
+				echo -e "       PageSpeed  FixPatch          [${CRED}FAIL${CEND}]"
 				echo ""
 				echo "Please look /tmp/nginx-autoinstall-error.log"
 				echo ""
