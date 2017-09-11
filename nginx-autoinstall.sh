@@ -133,6 +133,28 @@ case $OPTION in
 				exit 1
 			fi
 		fi
+		
+                # VTS (Nginx virtual host traffic status module) 
+		if [[ "$VTS" = 'y' ]]; then
+			cd /usr/local/src
+			# Cleaning up in case of update
+			rm -r ${VTS} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
+			echo -ne "       Downloading nginx-module-vts   [..]\r"
+			wget https://github.com/vozlt/nginx-module-vts/releases/${VTS}.tar.gz 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			tar xaf ${VTS}.tar.gz
+			rm ${VTS}.tar.gz
+				
+			if [ $? -eq 0 ]; then
+				echo -ne "       Downloading nginx-module-vts   [${CGREEN}OK${CEND}]\r"
+				echo -ne "\n"
+			else
+				echo -e "       Downloading nginx-module-vts   [${CRED}FAIL${CEND}]"
+				echo ""
+				echo "Please look /tmp/nginx-autoinstall-error.log"
+				echo ""
+				exit 1
+			fi
+		fi
 
 		#Brotli
 		if [[ "$BROTLI" = 'y' ]]; then
