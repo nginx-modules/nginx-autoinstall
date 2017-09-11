@@ -662,7 +662,7 @@ case $OPTION in
 	exit
 	;;
 	3) # Update the script
-		wget https://github.com/8bite5d0/nginx-autoinstall/blob/master/nginx-autoinstall.sh -O nginx-autoinstall.sh 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+		wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/nginx-autoinstall.sh -O nginx-autoinstall.sh 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		chmod +x nginx-autoinstall.sh
 		echo ""
 		echo -e "${CGREEN}Update succcessful !${CEND}"
