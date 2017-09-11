@@ -276,7 +276,7 @@ case $OPTION in
 			# Cleaning up in case of update
 			rm -r ${VTS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
 			echo -ne "       Downloading VTS   [..]\r"
-			wget https://github.com/vozlt/nginx-module-vts/archive/${VTS}.tar.gz 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			wget https://github.com/vozlt/nginx-module-vts/archive/${VTS_VER}.tar.gz 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			tar xaf ${VTS_VER}.tar.gz
 			rm ${VTS_VER}.tar.gz
 				
