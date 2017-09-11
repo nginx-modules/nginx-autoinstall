@@ -274,7 +274,7 @@ case $OPTION in
 		     if [[ "$VTSNGX" = 'y' ]]; then
 			cd /usr/local/src
 			# Cleaning up in case of update
-			rm -r ${VTS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
+			rm -r nginx-module-vts 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
 			echo -ne "       Downloading VTS   [..]\r"
 			git clone https://github.com/vozlt/nginx-module-vts.git  2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			#wget https://github.com/vozlt/nginx-module-vts/archive/${VTS_VER}.tar.gz 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
