@@ -107,16 +107,13 @@ case $OPTION in
 		if [[ "$PAGESPEED" = 'y' ]]; then
 			cd /usr/local/src
 			# Cleaning up in case of update
-			#rm -r ngx_pagespeed-${NPS_VER}-stable 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
-			rm -r ngx_pagespeed 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
+			rm -r ngx_pagespeed-${NPS_VER}-stable 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
 			# Download and extract of PageSpeed module
 			echo -ne "       Downloading ngx_pagespeed      [..]\r"
-			#wget https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VER}-stable.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			#unzip v${NPS_VER}-stable.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			#rm v${NPS_VER}-stable.zip
-			git clone https://github.com/pagespeed/ngx_pagespeed.git 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			#cd ngx_pagespeed-${NPS_VER}-stable
-			cd ngx_pagespeed
+			wget https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VER}-stable.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			unzip v${NPS_VER}-stable.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			rm v${NPS_VER}-stable.zip
+			cd ngx_pagespeed-${NPS_VER}-stable
 			psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
 			[ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
 			wget ${psol_url} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
@@ -285,10 +282,10 @@ case $OPTION in
 			#rm ${VTS_VER}.tar.gz
 				
 			if [ $? -eq 0 ]; then
-				echo -ne "       Downloading VTS Module Nginx    [${CGREEN}OK${CEND}]\r"
+				echo -ne "       Downloading VTS Module Nginx   [${CGREEN}OK${CEND}]\r"
 				echo -ne "\n"
 			else
-				echo -e "       Downloading VTS Module Nginx    [${CRED}FAIL${CEND}]"
+				echo -e "       Downloading VTS Module Nginx   [${CRED}FAIL${CEND}]"
 				echo ""
 				echo "Please look /tmp/nginx-autoinstall-error.log"
 				echo ""
@@ -462,8 +459,7 @@ case $OPTION in
 
 		# PageSpeed
 		if [[ "$PAGESPEED" = 'y' ]]; then
-			#NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/ngx_pagespeed-${NPS_VER}-stable")
-			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/ngx_pagespeed")	
+			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/ngx_pagespeed-${NPS_VER}-stable")	
 		fi
 		# VTS
 		if [[ "$VTSNGX" = 'y' ]]; then
@@ -494,6 +490,25 @@ case $OPTION in
 			echo -ne "       TLS Dynamic Records support    [..]\r"
 			wget https://raw.githubusercontent.com/cujanovic/nginx-dynamic-tls-records-patch/master/nginx__dynamic_tls_records_1.11.5%2B.patch 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			patch -p1 < nginx__dynamic_tls_records_1.11.5*.patch 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+		        
+			if [ $? -eq 0 ]; then
+				echo -ne "       TLS Dynamic Records support    [${CGREEN}OK${CEND}]\r"
+				echo -ne "\n"
+			else
+				echo -e "       TLS Dynamic Records support    [${CRED}FAIL${CEND}]"
+				echo ""
+				echo "Please look /tmp/nginx-autoinstall-error.log"
+				echo ""
+				exit 1
+			fi
+		fi
+		
+		# PageSpeed  Patch 
+		if [[ "$TCP" = 'y' ]]; then
+			echo -ne "       PageSpeed  FixPatch    [..]\r"
+			cd /usr/local/src/ngx_pagespeed-${NPS_VER}-stable
+			wget https://patch-diff.githubusercontent.com/raw/pagespeed/ngx_pagespeed/pull/1453.diff 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			patch -p1 < 1453.diff 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		        
 			if [ $? -eq 0 ]; then
 				echo -ne "       TLS Dynamic Records support    [${CGREEN}OK${CEND}]\r"
