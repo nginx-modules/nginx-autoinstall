@@ -131,29 +131,6 @@ case $OPTION in
 				exit 1
 			fi
 		fi
-		
-                # VTS (Nginx virtual host traffic status module) 
-		if [[ "$VTSNGX" = 'y' ]]; then
-			cd /usr/local/src
-			# Cleaning up in case of update
-			rm -r ${VTS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
-			echo -ne "       Downloading VTS   [..]\r"
-			wget https://github.com/vozlt/nginx-module-vts/archive/${VTS}.tar.gz 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			tar xaf ${VTS_VER}.tar.gz
-			rm ${VTS_VER}.tar.gz
-				
-			if [ $? -eq 0 ]; then
-				echo -ne "       Downloading VTS   [${CGREEN}OK${CEND}]\r"
-				echo -ne "\n"
-			else
-				echo -e "       Downloading VTS   [${CRED}FAIL${CEND}]"
-				echo ""
-				echo "Please look /tmp/nginx-autoinstall-error.log"
-				echo ""
-				exit 1
-			fi
-		fi
-
 		#Brotli
 		if [[ "$BROTLI" = 'y' ]]; then
 			cd /usr/local/src
@@ -292,6 +269,28 @@ case $OPTION in
 				exit 1
 			fi
 		fi
+		
+	                # VTS (Nginx virtual host traffic status module) 
+		if [[ "$VTSNGX" = 'y' ]]; then
+			cd /usr/local/src
+			# Cleaning up in case of update
+			rm -r ${VTS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
+			echo -ne "       Downloading VTS   [..]\r"
+			wget https://github.com/vozlt/nginx-module-vts/archive/${VTS}.tar.gz 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			tar xaf ${VTS_VER}.tar.gz
+			rm ${VTS_VER}.tar.gz
+				
+			if [ $? -eq 0 ]; then
+				echo -ne "       Downloading VTS   [${CGREEN}OK${CEND}]\r"
+				echo -ne "\n"
+			else
+				echo -e "       Downloading VTS   [${CRED}FAIL${CEND}]"
+				echo ""
+				echo "Please look /tmp/nginx-autoinstall-error.log"
+				echo ""
+				exit 1
+			fi
+		fi	
 
 		# LibreSSL
 		if [[ "$LIBRESSL" = 'y' ]]; then
