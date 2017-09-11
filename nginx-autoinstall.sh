@@ -108,18 +108,19 @@ case $OPTION in
 			cd /usr/local/src
 			# Cleaning up in case of update
 			rm -r ngx_pagespeed-${NPS_VER}-stable 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
+			rm -r ngx_pagespeed 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
 			# Download and extract of PageSpeed module
 			echo -ne "       Downloading ngx_pagespeed      [..]\r"
-			wget https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VER}-stable.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			unzip v${NPS_VER}-stable.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			rm v${NPS_VER}-stable.zip
-			cd ngx_pagespeed-${NPS_VER}-stable
-			psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
-			[ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
-			wget ${psol_url} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			tar -xzvf $(basename ${psol_url}) 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			rm $(basename ${psol_url})
-
+			#wget https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VER}-stable.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			#unzip v${NPS_VER}-stable.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			#rm v${NPS_VER}-stable.zip
+			#cd ngx_pagespeed-${NPS_VER}-stable
+			#psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
+			#[ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
+			#wget ${psol_url} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			#tar -xzvf $(basename ${psol_url}) 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			#rm $(basename ${psol_url})
+                        git clone https://github.com/pagespeed/ngx_pagespeed.git 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			if [ $? -eq 0 ]; then
 			echo -ne "       Downloading ngx_pagespeed      [${CGREEN}OK${CEND}]\r"
 				echo -ne "\n"
@@ -459,7 +460,8 @@ case $OPTION in
 
 		# PageSpeed
 		if [[ "$PAGESPEED" = 'y' ]]; then
-			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/ngx_pagespeed-${NPS_VER}-stable")
+			#NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/ngx_pagespeed-${NPS_VER}-stable")
+			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/ngx_pagespeed")	
 		fi
 		# VTS
 		if [[ "$VTSNGX" = 'y' ]]; then
