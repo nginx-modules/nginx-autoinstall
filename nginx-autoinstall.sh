@@ -60,7 +60,7 @@ case $OPTION in
 		while [[ $TCP != "y" && $TCP != "n" ]]; do
 			read -p "       Cloudflare's TLS Dynamic Record Resizing patch [y/n]: " -e TCP
 		done
-		while [[ $VTS != "y" && $VTS != "n" ]]; do
+		while [[ $VTSNGX != "y" && $VTSNGX != "n" ]]; do
 			read -p "       VTS $VTS_VER (Nginx virtual host traffic status module)  [y/n]: " -e VTS
 		done
 		echo ""
