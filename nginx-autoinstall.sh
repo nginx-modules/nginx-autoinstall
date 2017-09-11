@@ -13,11 +13,12 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # Variables
-NGINX_VER=1.13.0
-LIBRESSL_VER=2.5.3
-OPENSSL_VER=1.1.0e
+NGINX_VER=1.13.5
+LIBRESSL_VER=2.5.5
+OPENSSL_VER=1.1.0f
 NPS_VER=1.12.34.2
 HEADERMOD_VER=0.32
+VTS=0
 
 # Clear log files
 echo "" > /tmp/nginx-autoinstall-output.log
