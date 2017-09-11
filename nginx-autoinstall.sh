@@ -20,8 +20,6 @@ NPS_VER=1.12.34.2
 HEADERMOD_VER=0.32
 VTS=0.1.15
 
-#https://github.com/pagespeed/ngx_pagespeed/archive/v1.12.34.2-stable.tar.gz
-
 # Clear log files
 echo "" > /tmp/nginx-autoinstall-output.log
 echo "" > /tmp/nginx-autoinstall-error.log
