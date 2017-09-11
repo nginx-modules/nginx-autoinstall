@@ -413,7 +413,7 @@ case $OPTION in
 		if [[ ! -e /etc/nginx/nginx.conf ]]; then
 			mkdir -p /etc/nginx
 			cd /etc/nginx
-			wget https://raw.githubusercontent.com/Angristan/nginx-autoinstall/master/conf/nginx.conf 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/conf/nginx.conf 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		fi
 		cd /usr/local/src/nginx-${NGINX_VER}
 
@@ -463,7 +463,10 @@ case $OPTION in
 		if [[ "$PAGESPEED" = 'y' ]]; then
 			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/ngx_pagespeed-${NPS_VER}-beta")
 		fi
-
+		# VTS
+		if [[ "$VTS" = 'y' ]]; then
+			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/$VTS")
+		fi
 		# Brotli
 		if [[ "$BROTLI" = 'y' ]]; then
 			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/ngx_brotli")
@@ -554,15 +557,22 @@ case $OPTION in
 		# Using the official systemd script and logrotate conf from nginx.org
 		if [[ ! -e /lib/systemd/system/nginx.service ]]; then
 			cd /lib/systemd/system/
-			wget https://raw.githubusercontent.com/Angristan/nginx-autoinstall/master/conf/nginx.service 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/conf/nginx.service 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			# Enable nginx start at boot
 			systemctl enable nginx 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		fi
 
 		if [[ ! -e /etc/logrotate.d/nginx ]]; then
 			cd /etc/logrotate.d/
-			wget https://raw.githubusercontent.com/Angristan/nginx-autoinstall/master/conf/nginx-logrotate -O nginx 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/conf/nginx-logrotate -O nginx 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		fi
+                # VTS copy config
+		if [[ ! -e /etc/nginx/sites-available/vts.conf ]]; then
+		mkdir -p /etc/nginx/sites-available
+		cd /etc/nginx/sites-available
+		wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/conf/vts.conf 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+		fi
+
 
 		# Nginx's cache directory is not created by default
 		if [[ ! -d /var/cache/nginx ]]; then
@@ -620,6 +630,7 @@ case $OPTION in
 		/usr/local/src/ngx_pagespeed-release-* \
 		/usr/local/src/libressl-* \
 		/usr/local/src/openssl-* \
+		//usr/local/src/${VTS} \
 		/usr/sbin/nginx* \
 		/etc/logrotate.d/nginx \
 		/var/cache/nginx \
