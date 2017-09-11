@@ -60,6 +60,9 @@ case $OPTION in
 		while [[ $TCP != "y" && $TCP != "n" ]]; do
 			read -p "       Cloudflare's TLS Dynamic Record Resizing patch [y/n]: " -e TCP
 		done
+		while [[ $FIX != "y" && $FIX != "n" ]]; do
+			read -p "       Fix page dpeed build patch [y/n]: " -e FIX
+		done
 		while [[ $VTSNGX != "y" && $VTSNGX != "n" ]]; do
 			read -p "       VTS $VTS_VER (Nginx virtual host traffic status module)  [y/n]: " -e VTSNGX
 		done
@@ -504,17 +507,17 @@ case $OPTION in
 		fi
 		
 		# PageSpeed  Patch 
-		if [[ "$TCP" = 'y' ]]; then
+		if [[ "$FIX" = 'y' ]]; then
 			echo -ne "       PageSpeed  FixPatch    [..]\r"
 			cd /usr/local/src/ngx_pagespeed-${NPS_VER}-stable
 			wget https://patch-diff.githubusercontent.com/raw/pagespeed/ngx_pagespeed/pull/1453.diff 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			patch -p1 < 1453.diff 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		        
 			if [ $? -eq 0 ]; then
-				echo -ne "       TLS Dynamic Records support    [${CGREEN}OK${CEND}]\r"
+				echo -ne "       PageSpeed  FixPatch       [${CGREEN}OK${CEND}]\r"
 				echo -ne "\n"
 			else
-				echo -e "       TLS Dynamic Records support    [${CRED}FAIL${CEND}]"
+				echo -e "       PageSpeed  FixPatch       [${CRED}FAIL${CEND}]"
 				echo ""
 				echo "Please look /tmp/nginx-autoinstall-error.log"
 				echo ""
