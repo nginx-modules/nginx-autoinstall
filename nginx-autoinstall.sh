@@ -133,7 +133,7 @@ case $OPTION in
 		fi
 		
                 # VTS (Nginx virtual host traffic status module) 
-		if [[ "$VTS" = 'y' ]]; then
+		if [[ "$VTSNGX" = 'y' ]]; then
 			cd /usr/local/src
 			# Cleaning up in case of update
 			rm -r ${VTS} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
