@@ -282,10 +282,10 @@ case $OPTION in
 			#rm ${VTS_VER}.tar.gz
 				
 			if [ $? -eq 0 ]; then
-				echo -ne "       Downloading VTS   [${CGREEN}OK${CEND}]\r"
+				echo -ne "       Downloading VTS Status   [${CGREEN}OK${CEND}]\r"
 				echo -ne "\n"
 			else
-				echo -e "       Downloading VTS   [${CRED}FAIL${CEND}]"
+				echo -e "       Downloading VTS Status  [${CRED}FAIL${CEND}]"
 				echo ""
 				echo "Please look /tmp/nginx-autoinstall-error.log"
 				echo ""
@@ -463,7 +463,7 @@ case $OPTION in
 		fi
 		# VTS
 		if [[ "$VTSNGX" = 'y' ]]; then
-			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/$VTSNGX")
+			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/nginx-module-vts")
 		fi
 		# Brotli
 		if [[ "$BROTLI" = 'y' ]]; then
