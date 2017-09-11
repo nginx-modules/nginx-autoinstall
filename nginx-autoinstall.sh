@@ -628,7 +628,7 @@ case $OPTION in
 		/usr/local/src/ngx_pagespeed-release-* \
 		/usr/local/src/libressl-* \
 		/usr/local/src/openssl-* \
-		//usr/local/src/${VTS} \
+		/usr/local/src/nginx-module-vts \
 		/usr/sbin/nginx* \
 		/etc/logrotate.d/nginx \
 		/var/cache/nginx \
