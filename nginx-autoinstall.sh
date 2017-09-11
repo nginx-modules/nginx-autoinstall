@@ -590,6 +590,8 @@ case $OPTION in
                 # VTS copy config
 		if [[ ! -e /etc/nginx/sites-available/vts.conf ]]; then
 		mkdir -p /etc/nginx/sites-available
+		mkdir -p /etc/nginx/conf.d
+		mkdir -p /etc/nginx/sites-enabled
 		cd /etc/nginx/sites-available
 		wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/conf/vts.conf 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		fi
