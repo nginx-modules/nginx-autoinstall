@@ -23,12 +23,12 @@ Automatically compile from source and install Nginx mainline, on Debian 9 (64 bi
 
 Just download and execute the script :
 ```
-wget https://raw.githubusercontent.com/Angristan/nginx-autoinstall/master/nginx-autoinstall.sh
+wget https://github.com/8bite5d0/nginx-autoinstall/blob/master/nginx-autoinstall.sh
 chmod +x nginx-autoinstall.sh
 ./nginx-autoinstall.sh
 ```
 
-You can check [configuration examples](https://github.com/Angristan/nginx-autoinstall/tree/master/conf) for the custom modules.
+You can check [configuration examples](https://github.com/8bite5d0/nginx-autoinstall/tree/master/conf) for the custom modules.
 
 ## Uninstall Nginx
 
