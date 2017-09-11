@@ -1,5 +1,5 @@
 # nginx-autoinstall
-Automatically compile from source and install Nginx mainline, on Debian 8 (64 bits).
+Automatically compile from source and install Nginx mainline, on Debian 9 (64 bits) and Ubuntu 16.04 LTS .
 
 ![screen](https://lut.im/cQ5J1pvOuX/aLcI1sR2LIQKIQxn.png)
 ## Features
