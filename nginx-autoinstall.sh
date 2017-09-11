@@ -282,10 +282,10 @@ case $OPTION in
 			#rm ${VTS_VER}.tar.gz
 				
 			if [ $? -eq 0 ]; then
-				echo -ne "       Downloading VTS Status    [${CGREEN}OK${CEND}]\r"
+				echo -ne "       Downloading VTS Module Nginx    [${CGREEN}OK${CEND}]\r"
 				echo -ne "\n"
 			else
-				echo -e "       Downloading VTS Status    [${CRED}FAIL${CEND}]"
+				echo -e "       Downloading VTS Module Nginx    [${CRED}FAIL${CEND}]"
 				echo ""
 				echo "Please look /tmp/nginx-autoinstall-error.log"
 				echo ""
