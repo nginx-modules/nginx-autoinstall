@@ -61,7 +61,7 @@ case $OPTION in
 			read -p "       Cloudflare's TLS Dynamic Record Resizing patch [y/n]: " -e TCP
 		done
 		while [[ $FIX != "y" && $FIX != "n" ]]; do
-			read -p "       Fix page dpeed build patch [y/n]: " -e FIX
+			read -p "       Fix PageSpeed Build Patch [y/n]: " -e FIX
 		done
 		while [[ $VTSNGX != "y" && $VTSNGX != "n" ]]; do
 			read -p "       VTS $VTS_VER (Nginx virtual host traffic status module)  [y/n]: " -e VTSNGX
