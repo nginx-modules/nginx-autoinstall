@@ -111,18 +111,13 @@ case $OPTION in
 		if [[ "$PAGESPEED" = 'y' ]]; then
 			cd /usr/local/src
 			# Cleaning up in case of update
-			rm -rf v{NPS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
+			rm -rf incubator-pagespeed-ngx-{NPS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
 			# Download and extract of PageSpeed module
 			echo -ne "       Downloading ngx_pagespeed      [..]\r"
 			wget https://github.com/apache/incubator-pagespeed-ngx/archive/v${NPS_VER}.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			unzip ${NPS_VER}.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			rm v${NPS_VER}.zip
-			cd v${NPS_VER}
-			psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
-			[ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
-			wget ${psol_url} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			tar -xzvf $(basename ${psol_url}) 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			rm $(basename ${psol_url})
+
                         
 			if [ $? -eq 0 ]; then
 			echo -ne "       Downloading ngx_pagespeed      [${CGREEN}OK${CEND}]\r"
@@ -393,7 +388,7 @@ case $OPTION in
 		# PageSpeed  Patch 
 		if [[ "$FIX" = 'y' ]]; then
 			echo -ne "       PageSpeed  FixPatch       [..]\r"
-			cd /usr/local/src/v${NPS_VER}
+			cd /usr/local/src/incubator-pagespeed-ngx-${NPS_VER}
 			wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/1488.diff 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			#patch -p1 < 1488.diff 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			patch src/ngx_pagespeed.cc -i 1488.diff -o updated.ngx_pagespeed.cc 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
@@ -484,7 +479,7 @@ case $OPTION in
 
 		# PageSpeed
 		if [[ "$PAGESPEED" = 'y' ]]; then
-			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/${NPS_VER}")	
+			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/incubator-pagespeed-ngx-${NPS_VER}")	
 		fi
 		# VTS
 		if [[ "$VTSNGX" = 'y' ]]; then
