@@ -111,11 +111,10 @@ case $OPTION in
 		if [[ "$PAGESPEED" = 'y' ]]; then
 			cd /usr/local/src
 			# Cleaning up in case of update
-			rm -r v{NPS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
+			rm -rf v{NPS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
 			# Download and extract of PageSpeed module
 			echo -ne "       Downloading ngx_pagespeed      [..]\r"
-			wget https://github.com/apache/incubator-pagespeed-ngx/archivev/v${NPS_VER}.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			
+			wget https://github.com/apache/incubator-pagespeed-ngx/archive/v${NPS_VER}.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			unzip ${NPS_VER}.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			rm v${NPS_VER}.zip
 			cd v${NPS_VER}
@@ -394,7 +393,7 @@ case $OPTION in
 		# PageSpeed  Patch 
 		if [[ "$FIX" = 'y' ]]; then
 			echo -ne "       PageSpeed  FixPatch       [..]\r"
-			cd /usr/local/src/${NPS_VER}
+			cd /usr/local/src/v${NPS_VER}
 			wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/1488.diff 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			#patch -p1 < 1488.diff 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			patch src/ngx_pagespeed.cc -i 1488.diff -o updated.ngx_pagespeed.cc 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
