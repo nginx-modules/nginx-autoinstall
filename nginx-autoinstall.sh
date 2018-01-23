@@ -26,8 +26,8 @@ echo "" > /tmp/nginx-autoinstall-error.log
 
 clear
 echo ""
-echo "Welcome to the nginx-autoinstall script."
-echo "${CRED}1.1.1 version script${CEND}"
+echo "Welcome to the nginx-autoinstall script - 1.1.1 version."
+echo ""
 echo ""
 echo "What do you want to do?"
 echo "   1) Install or update Nginx"
