@@ -16,7 +16,7 @@ fi
 NGINX_VER=1.13.8
 LIBRESSL_VER=2.6.4
 OPENSSL_VER=1.1.0g
-NPS_VER=v1.13.35.2-beta 
+NPS_VER=1.13.35.2-beta 
 HEADERMOD_VER=0.33
 VTS_VER=0.1.15
 
@@ -111,14 +111,14 @@ case $OPTION in
 		if [[ "$PAGESPEED" = 'y' ]]; then
 			cd /usr/local/src
 			# Cleaning up in case of update
-			rm -r {NPS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
+			rm -r v{NPS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
 			# Download and extract of PageSpeed module
 			echo -ne "       Downloading ngx_pagespeed      [..]\r"
-			wget https://github.com/apache/incubator-pagespeed-ngx/archivev/${NPS_VER}.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			wget https://github.com/apache/incubator-pagespeed-ngx/archivev/v${NPS_VER}.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			
 			unzip ${NPS_VER}.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			rm ${NPS_VER}.zip
-			cd ${NPS_VER}
+			rm v${NPS_VER}.zip
+			cd v${NPS_VER}
 			psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
 			[ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
 			wget ${psol_url} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
