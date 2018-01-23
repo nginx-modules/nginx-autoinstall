@@ -111,7 +111,7 @@ case $OPTION in
 		if [[ "$PAGESPEED" = 'y' ]]; then
 			cd /usr/local/src
 			# Cleaning up in case of update
-			rm -r ngx_pagespeed-${NPS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
+			rm -r {NPS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
 			# Download and extract of PageSpeed module
 			echo -ne "       Downloading ngx_pagespeed      [..]\r"
 			wget https://github.com/apache/incubator-pagespeed-ngx/archivev/${NPS_VER}.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
