@@ -509,7 +509,7 @@ case $OPTION in
 		if [[ "$TCP" = 'y' ]]; then
 			echo -ne "       TLS Dynamic Records support    [..]\r"
 			wget https://raw.githubusercontent.com/cujanovic/nginx-dynamic-tls-records-patch/master/nginx__dynamic_tls_records_1.13.0%2B.patch 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			patch -p1 < nginx__dynamic_tls_records_1.13.0%2B.patch 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			patch -p1 < nginx__dynamic_tls_records_1.13.0+.patch 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		        
 			if [ $? -eq 0 ]; then
 				echo -ne "       TLS Dynamic Records support    [${CGREEN}OK${CEND}]\r"
