@@ -111,7 +111,7 @@ case $OPTION in
 		if [[ "$PAGESPEED" = 'y' ]]; then
 			cd /usr/local/src
 			# Cleaning up in case of update
-			rm -rf incubator-pagespeed-ngx-{NPS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
+			rm -rf incubator-pagespeed-ngx-${NPS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
 			# Download and extract of PageSpeed module
 			echo -ne "       Downloading ngx_pagespeed      [..]\r"
 			wget https://github.com/apache/incubator-pagespeed-ngx/archive/v${NPS_VER}.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
@@ -652,7 +652,7 @@ case $OPTION in
 		/usr/local/src/headers-more-nginx-module-* \
 		/usr/local/src/ngx_brotli \
 		/usr/local/src/libbrotli \
-		/usr/local/src/ngx_pagespeed-release-* \
+		/usr/local/src/incubator-pagespeed-ngx-${NPS_VER} \
 		/usr/local/src/libressl-* \
 		/usr/local/src/openssl-* \
 		/usr/local/src/nginx-module-vts \
