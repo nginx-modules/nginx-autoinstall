@@ -16,7 +16,7 @@ fi
 NGINX_VER=1.13.8
 LIBRESSL_VER=2.6.4
 OPENSSL_VER=1.1.0g
-NPS_VER=1.12.34.3
+NPS_VER=v1.13.35.2-beta 
 HEADERMOD_VER=0.33
 VTS_VER=0.1.15
 
@@ -113,7 +113,8 @@ case $OPTION in
 			rm -r ngx_pagespeed-${NPS_VER}-stable 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
 			# Download and extract of PageSpeed module
 			echo -ne "       Downloading ngx_pagespeed      [..]\r"
-			wget https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VER}-stable.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			wget https://github.com/apache/incubator-pagespeed-ngx/archivev/${NPS_VER}.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			
 			unzip v${NPS_VER}-stable.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			rm v${NPS_VER}-stable.zip
 			cd ngx_pagespeed-${NPS_VER}-stable
