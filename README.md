@@ -1,6 +1,8 @@
 # nginx-autoinstall
 Automatically compile from source and install Nginx mainline, on Debian 9 (64 bits) and Ubuntu 16.04 LTS .
 
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XZNT7SAEYY988)
+
 ![screen](https://lut.im/cQ5J1pvOuX/aLcI1sR2LIQKIQxn.png)
 ## Features
 - Latest mainline version, from source
