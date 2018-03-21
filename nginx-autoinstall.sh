@@ -13,7 +13,7 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # Variables
-NGINX_VER=1.13.9
+NGINX_VER=1.13.10
 LIBRESSL_VER=2.6.4
 OPENSSL_VER=1.1.0g
 NPS_VER=1.13.35.2-stable
@@ -26,7 +26,7 @@ echo "" > /tmp/nginx-autoinstall-error.log
 
 clear
 echo ""
-echo "Welcome to the nginx-autoinstall script - 1.1.1 version."
+echo "Welcome to the nginx-autoinstall script - 1.2.0 version."
 echo ""
 echo ""
 echo "What do you want to do?"
@@ -474,6 +474,7 @@ case $OPTION in
 		--with-http_auth_request_module \
 		--with-http_slice_module \
 		--with-http_stub_status_module \
+		--with-http_grpc_module \
 		--with-http_realip_module"
 
 		# Optional modules
