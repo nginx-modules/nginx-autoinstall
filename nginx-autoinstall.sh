@@ -13,11 +13,14 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # Variables
-NGINX_VER=1.13.0
-LIBRESSL_VER=2.5.3
-OPENSSL_VER=1.1.0e
-NPS_VER=1.12.34.2
-HEADERMOD_VER=0.32
+NGINX_VER=1.14.0
+
+
+LIBRESSL_VER=2.7.3
+OPENSSL_VER=1.1.0h
+NPS_VER=1.13.35.2-stable
+HEADERMOD_VER=0.33
+VTS_VER=0.1.16
 
 # Clear log files
 echo "" > /tmp/nginx-autoinstall-output.log
@@ -25,7 +28,8 @@ echo "" > /tmp/nginx-autoinstall-error.log
 
 clear
 echo ""
-echo "Welcome to the nginx-autoinstall script."
+echo "Welcome to the nginx-autoinstall script - 1.2.0 version."
+echo ""
 echo ""
 echo "What do you want to do?"
 echo "   1) Install or update Nginx"
@@ -58,6 +62,9 @@ case $OPTION in
 		done
 		while [[ $TCP != "y" && $TCP != "n" ]]; do
 			read -p "       Cloudflare's TLS Dynamic Record Resizing patch [y/n]: " -e TCP
+		done
+		while [[ $VTSNGX != "y" && $VTSNGX != "n" ]]; do
+			read -p "       VTS $VTS_VER (Nginx virtual host traffic status module)  [y/n]: " -e VTSNGX
 		done
 		echo ""
 		echo "Choose your OpenSSL implementation :"
@@ -103,19 +110,19 @@ case $OPTION in
 		if [[ "$PAGESPEED" = 'y' ]]; then
 			cd /usr/local/src
 			# Cleaning up in case of update
-			rm -r ngx_pagespeed-${NPS_VER}-beta 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
+			rm -rf incubator-pagespeed-ngx-${NPS_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
 			# Download and extract of PageSpeed module
 			echo -ne "       Downloading ngx_pagespeed      [..]\r"
-			wget https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VER}-beta.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			unzip v${NPS_VER}-beta.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			rm v${NPS_VER}-beta.zip
-			cd ngx_pagespeed-${NPS_VER}-beta
+			wget https://github.com/apache/incubator-pagespeed-ngx/archive/v${NPS_VER}.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			unzip v${NPS_VER}.zip 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			rm v${NPS_VER}.zip
+			cd incubator-pagespeed-ngx-${NPS_VER}
 			psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
 			[ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
 			wget ${psol_url} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			tar -xzvf $(basename ${psol_url}) 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			rm $(basename ${psol_url})
-
+                        
 			if [ $? -eq 0 ]; then
 			echo -ne "       Downloading ngx_pagespeed      [${CGREEN}OK${CEND}]\r"
 				echo -ne "\n"
@@ -127,7 +134,6 @@ case $OPTION in
 				exit 1
 			fi
 		fi
-
 		#Brotli
 		if [[ "$BROTLI" = 'y' ]]; then
 			cd /usr/local/src
@@ -266,6 +272,29 @@ case $OPTION in
 				exit 1
 			fi
 		fi
+		
+	                # VTS (Nginx virtual host traffic status module) 
+		     if [[ "$VTSNGX" = 'y' ]]; then
+			cd /usr/local/src
+			# Cleaning up in case of update
+			rm -r nginx-module-vts 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log 
+			echo -ne "       Downloading VTS   [..]\r"
+			git clone https://github.com/vozlt/nginx-module-vts.git  2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			#wget https://github.com/vozlt/nginx-module-vts/archive/${VTS_VER}.tar.gz 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			#tar xaf ${VTS_VER}.tar.gz
+			#rm ${VTS_VER}.tar.gz
+				
+			if [ $? -eq 0 ]; then
+				echo -ne "       Downloading VTS Module Nginx   [${CGREEN}OK${CEND}]\r"
+				echo -ne "\n"
+			else
+				echo -e "       Downloading VTS Module Nginx   [${CRED}FAIL${CEND}]"
+				echo ""
+				echo "Please look /tmp/nginx-autoinstall-error.log"
+				echo ""
+				exit 1
+			fi
+		fi	
 
 		# LibreSSL
 		if [[ "$LIBRESSL" = 'y' ]]; then
@@ -359,6 +388,7 @@ case $OPTION in
 				exit 1
 			fi
 		fi
+				
 
 		# Cleaning up in case of update
 		rm -r /usr/local/src/nginx-${NGINX_VER} 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
@@ -385,7 +415,7 @@ case $OPTION in
 		if [[ ! -e /etc/nginx/nginx.conf ]]; then
 			mkdir -p /etc/nginx
 			cd /etc/nginx
-			wget https://raw.githubusercontent.com/Angristan/nginx-autoinstall/master/conf/nginx.conf 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			wget https://github.com/FuriousWarrior/nginx-autoinstall/raw/master/conf/nginx.conf 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		fi
 		cd /usr/local/src/nginx-${NGINX_VER}
 
@@ -433,9 +463,12 @@ case $OPTION in
 
 		# PageSpeed
 		if [[ "$PAGESPEED" = 'y' ]]; then
-			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/ngx_pagespeed-${NPS_VER}-beta")
+			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/incubator-pagespeed-ngx-${NPS_VER}")	
 		fi
-
+		# VTS
+		if [[ "$VTSNGX" = 'y' ]]; then
+			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/nginx-module-vts")
+		fi
 		# Brotli
 		if [[ "$BROTLI" = 'y' ]]; then
 			NGINX_MODULES=$(echo $NGINX_MODULES; echo "--add-module=/usr/local/src/ngx_brotli")
@@ -459,8 +492,8 @@ case $OPTION in
 		# Cloudflare's TLS Dynamic Record Resizing patch
 		if [[ "$TCP" = 'y' ]]; then
 			echo -ne "       TLS Dynamic Records support    [..]\r"
-			wget https://raw.githubusercontent.com/cujanovic/nginx-dynamic-tls-records-patch/master/nginx__dynamic_tls_records_1.11.5%2B.patch 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
-			patch -p1 < nginx__dynamic_tls_records_1.11.5*.patch 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			wget https://raw.githubusercontent.com/cujanovic/nginx-dynamic-tls-records-patch/master/nginx__dynamic_tls_records_1.13.0+.patch 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			patch -p1 < nginx__dynamic_tls_records_1.13.0+.patch 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		        
 			if [ $? -eq 0 ]; then
 				echo -ne "       TLS Dynamic Records support    [${CGREEN}OK${CEND}]\r"
@@ -473,7 +506,6 @@ case $OPTION in
 				exit 1
 			fi
 		fi
-
 		# We configure Nginx
 		echo -ne "       Configuring Nginx              [..]\r"
 		./configure $NGINX_OPTIONS $NGINX_MODULES 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
@@ -526,15 +558,24 @@ case $OPTION in
 		# Using the official systemd script and logrotate conf from nginx.org
 		if [[ ! -e /lib/systemd/system/nginx.service ]]; then
 			cd /lib/systemd/system/
-			wget https://raw.githubusercontent.com/Angristan/nginx-autoinstall/master/conf/nginx.service 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			wget https://github.com/FuriousWarrior/nginx-autoinstall/raw/master/conf/nginx.service 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			# Enable nginx start at boot
 			systemctl enable nginx 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		fi
 
 		if [[ ! -e /etc/logrotate.d/nginx ]]; then
 			cd /etc/logrotate.d/
-			wget https://raw.githubusercontent.com/Angristan/nginx-autoinstall/master/conf/nginx-logrotate -O nginx 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			wget https://github.com/FuriousWarrior/nginx-autoinstall/raw/master/conf/nginx-logrotate -O nginx 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		fi
+                # VTS copy config
+		if [[ ! -e /etc/nginx/sites-available/vts.conf ]]; then
+		mkdir -p /etc/nginx/sites-available
+		mkdir -p /etc/nginx/conf.d
+		mkdir -p /etc/nginx/sites-enabled
+		cd /etc/nginx/sites-available
+		wget https://github.com/FuriousWarrior/nginx-autoinstall/raw/master/conf/vts.conf 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+		fi
+
 
 		# Nginx's cache directory is not created by default
 		if [[ ! -d /var/cache/nginx ]]; then
@@ -589,9 +630,10 @@ case $OPTION in
 		/usr/local/src/headers-more-nginx-module-* \
 		/usr/local/src/ngx_brotli \
 		/usr/local/src/libbrotli \
-		/usr/local/src/ngx_pagespeed-release-* \
+		/usr/local/src/incubator-pagespeed-ngx-${NPS_VER} \
 		/usr/local/src/libressl-* \
 		/usr/local/src/openssl-* \
+		/usr/local/src/nginx-module-vts \
 		/usr/sbin/nginx* \
 		/etc/logrotate.d/nginx \
 		/var/cache/nginx \
@@ -625,7 +667,7 @@ case $OPTION in
 	exit
 	;;
 	3) # Update the script
-		wget https://raw.githubusercontent.com/Angristan/nginx-autoinstall/master/nginx-autoinstall.sh -O nginx-autoinstall.sh 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+		wget https://raw.githubusercontent.com/FuriousWarrior/nginx-autoinstall/master/nginx-autoinstall.sh -O nginx-autoinstall.sh 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		chmod +x nginx-autoinstall.sh
 		echo ""
 		echo -e "${CGREEN}Update succcessful !${CEND}"

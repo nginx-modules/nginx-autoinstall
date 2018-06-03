@@ -1,5 +1,9 @@
 # nginx-autoinstall
-Automatically compile from source and install Nginx mainline, on Debian 8 (64 bits).
+Automatically compile from source and install Nginx mainline, on Debian 9 (64 bits) and Ubuntu 16.04 LTS .
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XZNT7SAEYY988) [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/8bite5d0) 
+
+
 
 ![screen](https://lut.im/cQ5J1pvOuX/aLcI1sR2LIQKIQxn.png)
 ## Features
@@ -18,17 +22,18 @@ Automatically compile from source and install Nginx mainline, on Debian 8 (64 bi
 - [ngx_headers_more](https://github.com/openresty/headers-more-nginx-module) (Custom HTTP headers)
 - [GeoIP](http://dev.maxmind.com/geoip/geoip2/geolite2/) (GeoIP module and databases)
 - [Cloudflare's TLS Dynamic Records Resizing patch](https://github.com/cujanovic/nginx-dynamic-tls-records-patch) (Optmize lantency and throughput for TLS exchanges)
+- [VTS](https://github.com/vozlt/nginx-module-vts) (Nginx virtual host traffic status module)
 
 ## Install Nginx
 
 Just download and execute the script :
 ```
-wget https://raw.githubusercontent.com/Angristan/nginx-autoinstall/master/nginx-autoinstall.sh
+wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/nginx-autoinstall.sh
 chmod +x nginx-autoinstall.sh
 ./nginx-autoinstall.sh
 ```
 
-You can check [configuration examples](https://github.com/Angristan/nginx-autoinstall/tree/master/conf) for the custom modules.
+You can check [configuration examples](https://github.com/8bite5d0/nginx-autoinstall/tree/master/conf) for the custom modules.
 
 ## Uninstall Nginx
 
