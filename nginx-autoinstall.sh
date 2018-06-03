@@ -13,12 +13,14 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # Variables
-NGINX_VER=1.13.12
-LIBRESSL_VER=2.7.0
+NGINX_VER=1.14.0
+
+
+LIBRESSL_VER=2.7.3
 OPENSSL_VER=1.1.0h
 NPS_VER=1.13.35.2-stable
 HEADERMOD_VER=0.33
-VTS_VER=0.1.15
+VTS_VER=0.1.16
 
 # Clear log files
 echo "" > /tmp/nginx-autoinstall-output.log
@@ -413,7 +415,7 @@ case $OPTION in
 		if [[ ! -e /etc/nginx/nginx.conf ]]; then
 			mkdir -p /etc/nginx
 			cd /etc/nginx
-			wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/conf/nginx.conf 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			wget https://github.com/FuriousWarrior/nginx-autoinstall/raw/master/conf/nginx.conf 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		fi
 		cd /usr/local/src/nginx-${NGINX_VER}
 
@@ -556,14 +558,14 @@ case $OPTION in
 		# Using the official systemd script and logrotate conf from nginx.org
 		if [[ ! -e /lib/systemd/system/nginx.service ]]; then
 			cd /lib/systemd/system/
-			wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/conf/nginx.service 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			wget https://github.com/FuriousWarrior/nginx-autoinstall/raw/master/conf/nginx.service 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 			# Enable nginx start at boot
 			systemctl enable nginx 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		fi
 
 		if [[ ! -e /etc/logrotate.d/nginx ]]; then
 			cd /etc/logrotate.d/
-			wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/conf/nginx-logrotate -O nginx 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+			wget https://github.com/FuriousWarrior/nginx-autoinstall/raw/master/conf/nginx-logrotate -O nginx 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		fi
                 # VTS copy config
 		if [[ ! -e /etc/nginx/sites-available/vts.conf ]]; then
@@ -571,7 +573,7 @@ case $OPTION in
 		mkdir -p /etc/nginx/conf.d
 		mkdir -p /etc/nginx/sites-enabled
 		cd /etc/nginx/sites-available
-		wget https://github.com/8bite5d0/nginx-autoinstall/raw/master/conf/vts.conf 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+		wget https://github.com/FuriousWarrior/nginx-autoinstall/raw/master/conf/vts.conf 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		fi
 
 
@@ -665,7 +667,7 @@ case $OPTION in
 	exit
 	;;
 	3) # Update the script
-		wget https://raw.githubusercontent.com/8bite5d0/nginx-autoinstall/master/nginx-autoinstall.sh -O nginx-autoinstall.sh 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
+		wget https://raw.githubusercontent.com/FuriousWarrior/nginx-autoinstall/master/nginx-autoinstall.sh -O nginx-autoinstall.sh 2>> /tmp/nginx-autoinstall-error.log 1>> /tmp/nginx-autoinstall-output.log
 		chmod +x nginx-autoinstall.sh
 		echo ""
 		echo -e "${CGREEN}Update succcessful !${CEND}"
